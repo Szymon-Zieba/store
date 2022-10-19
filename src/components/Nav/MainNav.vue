@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {openSideNav} from "@/functions/displayIdStyle.js"
+import {openSideNav} from "@/composables/displayIdStyle.js"
 export default {
   name: "SideNav.vue",
   components: {},

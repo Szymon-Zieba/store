@@ -55,7 +55,10 @@ input{
   cursor: pointer;
   display: block;
 }
-.button:hover{
+.button:disabled{
+  cursor: context-menu;
+}
+.button:hover:enabled{
   color: black;
   background: #ccc ;
 }

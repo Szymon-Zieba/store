@@ -5,7 +5,7 @@
         Jeans
       </p>
       <p class="shop-main__top-right">
-        <router-link to="/"  class="margin-right click">
+        <router-link to="/cart"  class="margin-right click">
           <font-awesome-icon  icon="fa fa-shopping-cart"  />
         </router-link>
         <font-awesome-icon icon="fa fa-search" />
@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import BannerMain from "./BannerMain.vue"
-import ShopList from "../ShopList/ShopList.vue"
-import SubscribeNewsletter from "../SubscribeNewsletter.vue"
-import ContactInfo from "../ContactInfo.vue"
-import NewsletterPopup from "../NewsletterPopup.vue"
+import BannerMain from "@/components/ShopMain/BannerMain"
+import ShopList from "@/components/ShopList/ShopList"
+import SubscribeNewsletter from "@/components/SubscribeNewsletter"
+import ContactInfo from "@/components/ContactInfo"
+import NewsletterPopup from "@/components/Popups/NewsletterPopup"
 export default {
   name: "ShopMain.vue",
   components: {NewsletterPopup, ContactInfo, ShopList, BannerMain, SubscribeNewsletter}

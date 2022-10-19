@@ -7,67 +7,76 @@
       <div class="item"
            v-for="(item, index) in products"
            :key="index"
-           @mouseover="mouseOn(index)"
-           @mouseleave="mouseOff()"
       >
         <div class="item-photo">
-          <div class="item-button" :style="mouseId === index ?  'display: block' : 'display: none'">
-            <button class="button button-black">
+          <div class="item-button">
+            <button @click="clickBuyProduct(item)" class="button button-black">
               Buy now
               <i class="fa fa-shopping-cart"></i>
             </button>
           </div>
-          <img class="item-img" :src="item.image">
+          <img class="item-img" :src="item.image" :alt="'item' + index">
         </div>
         <p>
           {{item.product_name}}
         </p>
-        <p>
-          <b>{{item.price}}</b>
-        </p>
-
+        <div class="item-price-button">
+          <p>
+            <b>{{item.price}}</b>
+          </p>
+          <p>
+            <router-link :to="{ name: 'product', params: { id: item.id}}" class="button button-black">More</router-link>
+          </p>
+        </div>
       </div>
     </div>
   </section>
+  <Modal v-model="isModalVisible" ><AddToCartPopup :newItem="newItem"></AddToCartPopup></Modal>
 </template>
 
 <script>
-import {fetchData, link} from '@/api'
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useProductsStore} from "@/stores/products"
+import {storeToRefs} from "pinia";
+import AddToCartPopup from "@/components/Popups/AddToCartPopup"
+import Modal from "@/components/Modal"
+import useModal from "@/composables/modal";
 export default {
   name: "ShopList.vue",
+  components: {AddToCartPopup, Modal},
   setup(){
-    let isButtonVisible = ref(false)
-    let products = ref([])
-    let mouseId = ref(null)
-
-    const mouseOn = (index) => {
-      isButtonVisible = true
-      mouseId.value = index
+    const productsStore = useProductsStore()
+    const { products } = storeToRefs(productsStore)
+    const { getProducts } = productsStore
+    const { openModal, isModalVisible } = useModal()
+    const newItem = ref(null)
+    const clickBuyProduct = (item) => {
+      openModal()
+      newItem.value = item
     }
-
-    const mouseOff = () => {
-      isButtonVisible = false
-      mouseId.value = -1
-    }
-
-
-    onMounted(async () => {
-      products.value = await fetchData(link)
-
+    onMounted(async() => {
+       await getProducts()
     })
+
     return{
+      isModalVisible,
       products,
-      isButtonVisible,
-      mouseId,
-      mouseOn,
-      mouseOff,
+      getProducts,
+      clickBuyProduct,
+      newItem
     }
   }
 }
 </script>
 
 <style>
+.test{
+  position: fixed;
+  top:50%;
+  left: 50%;
+  height: 100px;
+  z-index: 1000;
+}
 .counter{
   color: grey;
   padding: 0 16px;
@@ -87,17 +96,23 @@ export default {
 .item-photo{
   position: relative;
 }
+.item-photo:hover > .item-button{
+  display: block;
+}
 .item-img{
   width: 100%;
 }
 .item-button{
+  display: none;
   position: absolute;
   top:50%;
   left: 50%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
 }
-.display-none{
-  display: none;
+.item-price-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

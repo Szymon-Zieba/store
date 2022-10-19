@@ -9,7 +9,7 @@
           COLLECTION 2016
         </h1>
         <p class="banner-main-button">
-          <a class="banner-main-button-text" href="" >SHOP NOW</a>
+          <a class="banner-main-button-text" href="#shopList" >SHOP NOW</a>
         </p>
     </div>
   </section>

@@ -20,19 +20,23 @@
     </div>
     <div class="side-nav__info">
       <a href="#contact" class="button">Contact</a>
-      <a @click="displayIdStyle('popup', 'block')" class="button">Newsletter</a>
+      <a @click="openModal()" class="button">Newsletter</a>
       <a href="#newsletter" class="button">Subscribe</a>
     </div>
   </div>
+  <Modal v-model="isModalVisible" ><NewsletterPopup></NewsletterPopup></Modal>
 </template>
 
 <script>
 import ItemSideNav from "@/components/Nav/ItemSideNav.vue";
-import {displayIdStyle, closeSideNav} from "@/functions/displayIdStyle";
+import Modal from "@/components/Modal"
+import NewsletterPopup from "@/components/Popups/NewsletterPopup";
+import {closeSideNav} from "@/composables/displayIdStyle";
 import {ref} from "vue";
+import useModal from "@/composables/modal";
 export default {
   name: "SideNav.vue",
-  components: {ItemSideNav},
+  components: {ItemSideNav, Modal, NewsletterPopup},
   setup(){
     const categories = ref([
       {
@@ -65,9 +69,9 @@ export default {
     ])
 
     return {
+      ...useModal(),
       categories,
-      displayIdStyle,
-      closeSideNav,
+      closeSideNav
     }
   }
 }
