@@ -4,25 +4,37 @@
       <h2 class="popup-block-title">NEWSLETTER</h2>
       <p>Join our mailing list to receive updates on new arrivals and special offers.</p>
       <p><input class="width100" type="text" placeholder="Enter e-mail"></p>
-      <button class="button button-large button-red popup-block-button">Subscribe</button>
+      <button @click="close" class="button button-large button-red popup-block-button">Subscribe</button>
     </div>
   </div>
 </template>
 
 <script>
 
+import {useCartStore} from "@/stores/cart";
+import {toRef} from "vue";
+
 export default {
   name: "NewsletterPopup.vue",
-  setup(){
-
+  props: {
+    modelValue: Boolean,
+  },
+  emits: ["update:modelValue"],
+  setup(props, {emit}){
+    const close = () => {
+      emit("update:modelValue", false)
+    }
     return {
-
+      close
     }
   }
 }
 </script>
 
 <style>
+.popup-block{
+  width: 700px;
+}
 @media (max-width: 992px) {
   .popup-block{
     width: 600px;
@@ -35,17 +47,12 @@ export default {
 }
 @media (max-width: 600px){
   .popup-block{
-    width: auto;
-    margin: 10px 0;
+    width: 70vw;
   }
 }
 .popup-block-title{
   letter-spacing: 4px;
-}
-.popup-block-icon{
-  font-size: 36px;
-  float: right;
-  cursor: pointer;
+  text-align: center;
 }
 .popup-block-button{
   margin: 0 auto;

@@ -24,7 +24,7 @@
       <a href="#newsletter" class="button">Subscribe</a>
     </div>
   </div>
-  <Modal v-model="isModalVisible" ><NewsletterPopup></NewsletterPopup></Modal>
+  <Modal v-model="isModalVisible" ><NewsletterPopup v-model="isModalVisible"></NewsletterPopup></Modal>
 </template>
 
 <script>
@@ -34,39 +34,12 @@ import NewsletterPopup from "@/components/Popups/NewsletterPopup";
 import {closeSideNav} from "@/composables/displayIdStyle";
 import {ref} from "vue";
 import useModal from "@/composables/modal";
+import {categories} from "@/components/Nav/category"
 export default {
   name: "SideNav.vue",
   components: {ItemSideNav, Modal, NewsletterPopup},
   setup(){
-    const categories = ref([
-      {
-        category: "Shirts",
-      },
-      {
-        category: "Dresses",
-      },
-      {
-        category: "Jeans",
-        more: [
-            "Skinny",
-            "Relaxed",
-            "Bootcut",
-            "Straight",
-        ]
-      },
-      {
-        category: "Jackets",
-      },
-      {
-        category: "Gymwear",
-      },
-      {
-        category: "Blazers",
-      },
-      {
-        category: "Shoes",
-      }
-    ])
+
 
     return {
       ...useModal(),

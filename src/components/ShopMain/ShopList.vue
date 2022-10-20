@@ -25,13 +25,13 @@
             <b>{{item.price}}</b>
           </p>
           <p>
-            <router-link :to="{ name: 'product', params: { id: item.id}}" class="button button-black">More</router-link>
+            <router-link @click="scrollToTop" :to="{ name: 'product', params: { id: item.id}}" class="button button-black">More</router-link>
           </p>
         </div>
       </div>
     </div>
   </section>
-  <Modal v-model="isModalVisible" ><AddToCartPopup :newItem="newItem"></AddToCartPopup></Modal>
+  <Modal v-model="isModalVisible" ><AddToCartPopup v-model="isModalVisible" :newItem="newItem"></AddToCartPopup></Modal>
 </template>
 
 <script>
@@ -54,6 +54,11 @@ export default {
       openModal()
       newItem.value = item
     }
+
+    const scrollToTop = () => {
+      window.scrollTo(0,0);
+    }
+
     onMounted(async() => {
        await getProducts()
     })
@@ -63,7 +68,8 @@ export default {
       products,
       getProducts,
       clickBuyProduct,
-      newItem
+      newItem,
+      scrollToTop
     }
   }
 }

@@ -5,7 +5,7 @@
         Jeans
       </p>
       <p class="shop-main__top-right">
-        <router-link to="/cart"  class="margin-right click">
+        <router-link to="/cart"  class="margin-right16 click">
           <font-awesome-icon  icon="fa fa-shopping-cart"  />
         </router-link>
         <font-awesome-icon icon="fa fa-search" />
@@ -19,7 +19,7 @@
 
 <script>
 import BannerMain from "@/components/ShopMain/BannerMain"
-import ShopList from "@/components/ShopList/ShopList"
+import ShopList from "@/components/ShopMain/ShopList"
 import SubscribeNewsletter from "@/components/SubscribeNewsletter"
 import ContactInfo from "@/components/ContactInfo"
 import NewsletterPopup from "@/components/Popups/NewsletterPopup"
@@ -42,8 +42,5 @@ export default {
 }
 .shop-main__top-right{
   float: right;
-}
-.margin-right{
-  margin-right: 16px;
 }
 </style>

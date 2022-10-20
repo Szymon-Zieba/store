@@ -17,39 +17,40 @@
             <i class="fa fa-trash"></i>
           </button>
         </div>
-        <img class="cart-img pd0-10" :src="item.product.image">
+        <img class="cart-img pd0-10" :src="item.product.image" alt="product-image">
       </div>
       <div class="cart-item-center cart-item-center1">
-        <div class="pd0-10 cart-item-title">
-          <router-link to="/" >
+        <div class="pd0-10 cart-item-title mt-30-small">
+          <router-link :to="{ name: 'product', params: { id: item.product.id}}">
             {{ item.product.product_name }}
           </router-link>
         </div>
-        <div class="cart-counter pd0-10">
-          <button class="button cart-counter-button" id="counter-minus" @click="minusCounter(index)">
-            -
-          </button>
-          <p class="cart-counter-text pd0-10">{{item.quantity}}</p>
-          <button class="button cart-counter-button" id="counter-plus" @click="plusCounter(index)">
-            +
-          </button>
+        <div class="cart-item-small mt-30-small">
+          <div class="cart-counter pd0-10">
+            <button class="button cart-counter-button" id="counter-minus" @click="minusCounter(index)">
+              -
+            </button>
+            <p class="cart-counter-text">{{item.quantity}}</p>
+            <button class="button cart-counter-button" id="counter-plus" @click="plusCounter(index)">
+              +
+            </button>
+          </div>
+          <div class="cart-counter-price">
+            <span  >
+            ${{(item.product.price.split('$')[1] * item.quantity).toFixed(2)}}
+            </span>
+          </div>
         </div>
-        <span class="pd0-10">
-          ${{(item.product.price.split('$')[1] * item.quantity).toFixed(2)}}
-        </span>
       </div>
     </div>
     <div class="cart-checkout">
-      <div class="cart-checkout-price">
-        <div class="">
-          <span>Wartość produktów </span>
-          <span>{{ cartValue }}</span>
-        </div>
-        <div class=""><span>Dostawa od </span><span>15zl</span></div>
+        <div class="cart-checkout-price">
+          <span>Wartość produktów  <b>${{ cartValue }}</b></span>
       </div>
-      <span>Razem z dostawą {{parseInt(cartValue) + 15}}</span>
-      <button class="button button-red">Dostawa i płatność</button>
-      <router-link class="button button-black" to="/">Kontynuuj zakupy</router-link>
+      <div class="cart-checkout-buttons">
+        <button class="button button-red cart-checkout-button button-large">Dostawa i płatność</button>
+        <router-link class="button button-black button-large" to="/">Kontynuuj zakupy</router-link>
+      </div>
     </div>
   </section>
 </template>
@@ -100,48 +101,45 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 100px;
   border-bottom: 1px solid #e3e1e1;
 }
 .cart-item:hover .cart-img-button{
   display: block;
 }
+@media (max-width: 802px) {
+  .cart-item{
+    padding: 10px 50px;
+  }
+}
 @media (max-width: 602px) {
   .cart-item{
     flex-direction: column;
+    padding: 10px 0;
   }
-}
-.cart-checkout{
-  z-index: 2;
-  position: fixed;
-  height: 100px;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  background-color: white;
-  border-top: 1px solid #f4f4f4;
 }
 .cart-item-center{
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 0;
-  width: 100%;
+  width: 40%;
   position: relative;
+  text-align: justify;
+}
+.cart-item-center1{
+  justify-content: flex-end;
+  width: 100%;
 }
 @media (max-width: 602px) {
   .cart-item-center {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
+    text-align: center;
   }
 }
 .cart-checkout-price{
   display: flex;
   flex-direction: column;
-}
-.cart-counter{
-  display: flex;
 }
 .cart-img{
   max-width: 150px;
@@ -150,14 +148,73 @@ export default {
   display: none;
   position: absolute;
 }
+.cart-counter{
+  display: flex;
+}
 .cart-counter-text{
-  padding: 0 10px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+
+}
+.cart-item-small{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 }
 .cart-item-title{
-  max-width: 400px;
+  width: 70%;
+}
+
+@media (max-width: 602px){
+  .cart-item-title{
+    flex-direction: column;
+  }
+}
+.cart-counter-price{
+  width: 70px;
+  text-align: right;
 }
 .pd0-10{
   padding: 0 10px;
 }
-
+.cart-checkout{
+  z-index: 2;
+  position: sticky;
+  height: 100px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  border-top: 1px solid #f4f4f4;
+}
+@media (max-width: 992px) {
+  .cart-checkout{
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 602px) {
+  .cart-checkout{
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+.cart-checkout-price{
+  margin: 0 10px;
+}
+.cart-checkout-buttons{
+  display: flex;
+}
+.cart-checkout-button{
+  margin: 0 10px;
+}
+@media (max-width: 602px){
+  .mt-30-small{
+    margin-top: 30px;
+  }
+}
 </style>

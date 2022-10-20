@@ -1,8 +1,13 @@
 <template>
   <Teleport to="body">
-    <div v-if="modelValue" class="modal" @click="close()">
-      <div class="modal-content">
-        <slot></slot>
+    <div v-if="modelValue" class="modal-main">
+      <div  class="modal">
+        <div @click="close()" class="modal-close">
+          <i class="fa-solid fa-x"></i>
+        </div>
+        <div class="modal-content">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </Teleport>
@@ -29,21 +34,36 @@ import { ref } from 'vue'
 </script>
 
 <style scoped>
-.modal{
-  z-index: 5;
-  width: 100%;
-  height: 100%;
+.modal-main{
   position: fixed;
   background-color: rgba(0,0,0,0.4);
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
   top: 0;
   left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+.modal{
+  position: absolute;
   overflow: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px 20px;
 }
 .modal-content{
-  background-color: white;
-  padding: 40px;
+
+}
+.modal-close{
+  position: absolute;
+  cursor: pointer;
+  right: 20px;
+}
+@media (max-width: 350px){
+  .modal-close{
+    right: 10px;
+    top: 10px;
+  }
 }
 </style>
