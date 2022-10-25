@@ -27,27 +27,15 @@
   <Modal v-model="isModalVisible" ><NewsletterPopup v-model="isModalVisible"></NewsletterPopup></Modal>
 </template>
 
-<script>
+<script setup>
 import ItemSideNav from "@/components/Nav/ItemSideNav.vue";
 import Modal from "@/components/Modal"
 import NewsletterPopup from "@/components/Popups/NewsletterPopup";
 import {closeSideNav} from "@/composables/displayIdStyle";
-import {ref} from "vue";
 import useModal from "@/composables/modal";
 import {categories} from "@/components/Nav/category"
-export default {
-  name: "SideNav.vue",
-  components: {ItemSideNav, Modal, NewsletterPopup},
-  setup(){
 
-
-    return {
-      ...useModal(),
-      categories,
-      closeSideNav
-    }
-  }
-}
+const {openModal, isModalVisible } = useModal()
 </script>
 
 <style scoped>

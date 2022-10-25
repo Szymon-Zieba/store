@@ -16,9 +16,6 @@
 </template>
 
 <script>
-export default {
-  name: "BannerMain.vue"
-}
 </script>
 
 <style scoped>
@@ -41,11 +38,6 @@ export default {
 .banner-main-text-h1 {
   font-size: 64px;
 }
-@media (max-width: 600px) {
-  .banner-main-text-h1 {
-    font-size: 30px;
-  }
-}
 .banner-main-button{
   margin-top: 30px;
 }
@@ -62,6 +54,9 @@ export default {
 @media (max-width: 600px) {
   .banner-main-600 {
     display: none;
+  }
+  .banner-main-text-h1 {
+    font-size: 30px;
   }
 }
 h1{

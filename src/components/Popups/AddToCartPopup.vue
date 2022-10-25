@@ -11,35 +11,26 @@
   </div>
 </template>
 
-<script>
+<script setup >
 import {useCartStore} from "@/stores/cart";
 import { toRef} from "vue";
-export default {
-  name: "AddToCartPopup.vue",
-  props: {
+  const props = defineProps({
     modelValue: Boolean,
-    newItem: Object,
-  },
-  emits: ["update:modelValue"],
-  setup(props, {emit}){
-    const cartStore = useCartStore()
-    const { addProduct} = cartStore
-    const newItem = toRef(props, 'newItem')
-    const close = () => {
-      emit("update:modelValue", false)
-    }
-    const addNewProduct = () => {
-      addProduct(newItem.value)
-      close()
-    }
+    newItem: Object
+  })
 
-    return {
-      addNewProduct,
-      newItem,
-      close,
-    }
+  const emit = defineEmits(["update:modelValue"])
+  const cartStore = useCartStore()
+  const { addProduct} = cartStore
+  const newItem = toRef(props, 'newItem')
+  const close = () => {
+    emit("update:modelValue", false)
   }
-}
+  const addNewProduct = () => {
+    addProduct(newItem.value)
+    close()
+  }
+
 </script>
 
 <style >

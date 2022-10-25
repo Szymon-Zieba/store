@@ -5,12 +5,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import SideNav from "./SideNav.vue"
-export default {
-  name: "SideNavSmall.vue",
-  components: {SideNav}
-}
 </script>
 
 <style scoped>

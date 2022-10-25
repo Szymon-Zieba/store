@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import ShopMain from "@/components/ShopMain/ShopMain";
-import ProductInfo from "@/components/ProductInfo"
-import UserCart from "@/components/UserCart"
+import ShopMain from "@/views/ShopMain";
+import ProductInfo from "@/views/ProductInfo"
+import UserCart from "@/views/UserCart"
 
 const routes = [
     {

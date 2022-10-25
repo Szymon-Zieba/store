@@ -21,32 +21,22 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import {ref} from "vue";
-
-  export default {
-    name: "ItemSideNav.vue",
-    props: {
-      item:{
-        type: Object,
-        required: true
-      },
-      index:{
-        type: Number,
-        required: true
-      }
+  const props = defineProps({
+    item:{
+      type:Object,
+      required: true
     },
-    setup(props){
-      const item = props.item
-      const index = props.index
-      let isHidden = ref(false)
-      return {
-        item,
-        index,
-        isHidden,
-      }
+    index:{
+      type: Number,
+      required: true
     }
-  }
+  })
+  const item = props.item
+  const index = props.index
+  let isHidden = ref(false)
+
 </script>
 
 <style scoped>

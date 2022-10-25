@@ -1,19 +1,9 @@
-<script>
+<script setup>
 import MainNav from '@/components/Nav/MainNav'
 import SideNav from '@/components/Nav/SideNav'
 import SubscribeNewsletter from '@/components/SubscribeNewsletter'
 import ContactInfo from '@/components/ContactInfo'
 import NewsletterPopup from '@/components/Popups/NewsletterPopup'
-export default {
-  name: "App.vue",
-  components:{
-    SideNav,
-    MainNav,
-    SubscribeNewsletter,
-    ContactInfo,
-    NewsletterPopup
-  }
-}
 </script>
 
 <template>

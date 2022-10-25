@@ -5,18 +5,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {openSideNav} from "@/composables/displayIdStyle.js"
-export default {
-  name: "SideNav.vue",
-  components: {},
-  setup(){
-
-    return {
-      openSideNav
-    }
-  }
-}
 </script>
 
 <style scoped>

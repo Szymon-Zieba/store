@@ -7,7 +7,7 @@
     <div
         class="cart-item"
         v-for="(item, index) in cartList"
-        :key="index"
+        :key="item.product.id"
 
     >
       <div class="cart-item-center">
@@ -27,11 +27,11 @@
         </div>
         <div class="cart-item-small mt-30-small">
           <div class="cart-counter pd0-10">
-            <button class="button cart-counter-button" id="counter-minus" @click="minusCounter(index)">
+            <button class="button cart-counter-button" @click="minusCounter(index)">
               -
             </button>
             <p class="cart-counter-text">{{item.quantity}}</p>
-            <button class="button cart-counter-button" id="counter-plus" @click="plusCounter(index)">
+            <button class="button cart-counter-button" @click="plusCounter(index)">
               +
             </button>
           </div>
@@ -55,36 +55,24 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import {useCartStore} from "@/stores/cart";
 import {storeToRefs} from "pinia";
 
-export default {
-  name: "UserCart.vue",
-  setup(){
-    const cartStore = useCartStore()
-    const {cartList, cartValue} = storeToRefs(cartStore)
-    const {removeProduct} = cartStore
-    const minusCounter = (index) => {
-      if(cartList.value[index].quantity){
-        cartList.value[index].quantity -= 1
-      }
-    }
-    const plusCounter = (index) => {
-      if(cartList.value[index].quantity < 10){
-        cartList.value[index].quantity += 1
-      }
-    }
-
-    return{
-      minusCounter,
-      plusCounter,
-      cartList,
-      removeProduct,
-      cartValue
-    }
+const cartStore = useCartStore()
+const {cartList, cartValue} = storeToRefs(cartStore)
+const {removeProduct} = cartStore
+const minusCounter = (index) => {
+  if(cartList.value[index].quantity){
+    cartList.value[index].quantity -= 1
   }
 }
+const plusCounter = (index) => {
+  if(cartList.value[index].quantity < 10){
+    cartList.value[index].quantity += 1
+  }
+}
+
 </script>
 
 <style scoped>
@@ -107,17 +95,6 @@ export default {
 .cart-item:hover .cart-img-button{
   display: block;
 }
-@media (max-width: 802px) {
-  .cart-item{
-    padding: 10px 50px;
-  }
-}
-@media (max-width: 602px) {
-  .cart-item{
-    flex-direction: column;
-    padding: 10px 0;
-  }
-}
 .cart-item-center{
   display: flex;
   justify-content: center;
@@ -130,12 +107,6 @@ export default {
 .cart-item-center1{
   justify-content: flex-end;
   width: 100%;
-}
-@media (max-width: 602px) {
-  .cart-item-center {
-    flex-direction: column;
-    text-align: center;
-  }
 }
 .cart-checkout-price{
   display: flex;
@@ -166,12 +137,6 @@ export default {
 .cart-item-title{
   width: 70%;
 }
-
-@media (max-width: 602px){
-  .cart-item-title{
-    flex-direction: column;
-  }
-}
 .cart-counter-price{
   width: 70px;
   text-align: right;
@@ -190,19 +155,6 @@ export default {
   background-color: white;
   border-top: 1px solid #f4f4f4;
 }
-@media (max-width: 992px) {
-  .cart-checkout{
-    margin-left: 0;
-    width: 100%;
-    justify-content: center;
-  }
-}
-@media (max-width: 602px) {
-  .cart-checkout{
-    flex-direction: column;
-    justify-content: space-around;
-  }
-}
 .cart-checkout-price{
   margin: 0 10px;
 }
@@ -212,7 +164,34 @@ export default {
 .cart-checkout-button{
   margin: 0 10px;
 }
-@media (max-width: 602px){
+@media (max-width: 992px) {
+  .cart-checkout{
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 802px) {
+  .cart-item{
+    padding: 10px 50px;
+  }
+}
+@media (max-width: 602px) {
+  .cart-item{
+    flex-direction: column;
+    padding: 10px 0;
+  }
+  .cart-item-center {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cart-item-title{
+    flex-direction: column;
+  }
+  .cart-checkout{
+    flex-direction: column;
+    justify-content: space-around;
+  }
   .mt-30-small{
     margin-top: 30px;
   }

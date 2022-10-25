@@ -5,6 +5,8 @@ export const useCartStore = defineStore('cart', () => {
 
   let cartList = ref([])
 
+  const cartLength = computed(() => cartList.value.length)
+
   const addProduct = (product) => {
     const cartProduct = cartList.value.find((el) => el.product.id === product.id)
     if(cartProduct){
@@ -23,17 +25,14 @@ export const useCartStore = defineStore('cart', () => {
     if(index > -1){
       cartList.value.splice(index, 1)
     }
+    console.log(cartLength.value)
+    console.log(cartList.value.length)
   }
-  const tab = [
-    {
-      value: 1
-    },
-    {value: 2}
-  ]
  const cartValue = computed(() =>
      cartList.value.reduce((prev, item ) => prev+item.quantity * item.product.price.split("$")[1], 0).toFixed(2)
  )
 
-  return {cartList, addProduct, removeProduct, cartValue }
+
+  return {cartList, addProduct, removeProduct, cartValue, cartLength}
 })
 

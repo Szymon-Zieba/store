@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <div v-if="modelValue" class="modal-main">
+    <div v-if="props.modelValue" class="modal-main">
       <div  class="modal">
         <div @click="close()" class="modal-close">
           <i class="fa-solid fa-x"></i>
@@ -13,24 +13,14 @@
   </Teleport>
 </template>
 
-<script >
-import { ref } from 'vue'
-  export default {
-    props: {
-      modelValue: Boolean,
-    },
-    emits: ["update:modelValue"],
-    setup(props, {emit}){
-      const close = () => {
-        emit("update:modelValue", false)
-      }
-      return{
-        close
-      }
-    }
+<script setup>
+  const props = defineProps({
+   modelValue: Boolean
+  })
+  const emit = defineEmits(["update:modelValue"])
+  const close = () => {
+    emit("update:modelValue", false)
   }
-
-
 </script>
 
 <style scoped>
@@ -50,7 +40,7 @@ import { ref } from 'vue'
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 20px 20px;
+  padding: 20px;
 }
 .modal-content{
 

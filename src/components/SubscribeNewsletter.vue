@@ -9,10 +9,7 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "SubscribeNewsletter.vue"
-}
+<script setup>
 </script>
 
 <style scoped>

@@ -61,10 +61,7 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: "ContactInfo.vue"
-}
+<script setup>
 </script>
 
 <style scoped>

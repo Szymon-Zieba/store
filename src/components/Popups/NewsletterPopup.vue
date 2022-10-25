@@ -9,26 +9,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
+  const props = defineProps({
+    modelValue: Boolean
+  })
 
-import {useCartStore} from "@/stores/cart";
-import {toRef} from "vue";
-
-export default {
-  name: "NewsletterPopup.vue",
-  props: {
-    modelValue: Boolean,
-  },
-  emits: ["update:modelValue"],
-  setup(props, {emit}){
-    const close = () => {
-      emit("update:modelValue", false)
-    }
-    return {
-      close
-    }
+  const emit = defineEmits(["update:modelValue"])
+  const close = () => {
+    emit("update:modelValue", false)
   }
-}
+
 </script>
 
 <style>
