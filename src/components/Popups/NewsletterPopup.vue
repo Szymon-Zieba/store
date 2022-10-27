@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" id="popup">
+  <div class="popup">
     <div class="popup-block">
       <h2 class="popup-block-title">NEWSLETTER</h2>
       <p>Join our mailing list to receive updates on new arrivals and special offers.</p>

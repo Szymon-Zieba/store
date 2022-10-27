@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" id="addToCartPopup">
+  <div class="popup">
     <div class="popup-block">
       <h2 class="popup-block-title">Add To Cart</h2>
       <p class="popup-block-text">Are you sure to add <b>{{newItem.product_name}}</b> to cart?</p>

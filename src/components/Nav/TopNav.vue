@@ -47,7 +47,7 @@ const {cartLength} = storeToRefs(cartStore)
   color: black;
   background: red;
   font-size: 14px;
-  width: 15px;
+  width: 20px;
   display: flex;
   justify-content: center;
   border-radius: 50%;

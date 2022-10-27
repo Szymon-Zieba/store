@@ -5,10 +5,29 @@ export const useCartStore = defineStore('cart', () => {
 
   let cartList = ref([])
 
-  const cartLength = computed(() => cartList.value.length)
+  const summaryCartList = computed( () => {
+    return cartList.value.filter( el => el.quantity !== 0)
+  })
+  const summaryLength = computed(() => {
+    let length = ref(0)
+    summaryCartList.value.forEach(el => {
+      length.value += parseInt(el.quantity)
+    })
+    return length.value
+  })
+
+  const cartLength = computed(() => {
+    let length = ref(0)
+    cartList.value.forEach(el => {
+      length.value += parseInt(el.quantity)
+      if(parseInt(el.quantity) === 0) length.value += 1
+    })
+    return length.value
+  })
+
 
   const addProduct = (product) => {
-    const cartProduct = cartList.value.find((el) => el.product.id === product.id)
+    const cartProduct = cartList.value.find(el => el.product.id === product.id)
     if(cartProduct){
       cartProduct.quantity += 1
     }
@@ -21,18 +40,13 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const removeProduct = (id) => {
-    const index = cartList.value.findIndex((el) => el.product.id === id)
-    if(index > -1){
-      cartList.value.splice(index, 1)
-    }
-    console.log(cartLength.value)
-    console.log(cartList.value.length)
+    cartList.value = cartList.value.filter((el) => el.product.id !== id)
   }
  const cartValue = computed(() =>
      cartList.value.reduce((prev, item ) => prev+item.quantity * item.product.price.split("$")[1], 0).toFixed(2)
  )
 
 
-  return {cartList, addProduct, removeProduct, cartValue, cartLength}
+  return {cartList, addProduct, removeProduct, cartValue, cartLength, summaryCartList, summaryLength}
 })
 

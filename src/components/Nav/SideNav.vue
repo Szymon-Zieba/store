@@ -1,18 +1,20 @@
 <template>
-  <div id="side-nav-background" class="side-nav-background"></div>
-  <div class="side-nav side-nav-change" id="side-nav">
+  <div :class="isVisibleBackground"></div>
+  <div class="side-nav"
+       :class="isVisible"
+  >
     <div class="logo">
       <a
          class="side-nav-close"
-          @click="closeSideNav()"
+          @click="close()"
       >
         <i class="fa fa-remove"></i>
       </a>
-      <a href="/">
+      <router-link to="/">
         <h3 class="logo-text">
          <b>LOGO</b>
         </h3>
-      </a>
+      </router-link>
 
     </div>
     <div class="side-nav__list">
@@ -31,11 +33,20 @@
 import ItemSideNav from "@/components/Nav/ItemSideNav.vue";
 import Modal from "@/components/Modal"
 import NewsletterPopup from "@/components/Popups/NewsletterPopup";
-import {closeSideNav} from "@/composables/displayIdStyle";
 import useModal from "@/composables/modal";
 import {categories} from "@/components/Nav/category"
-
+import {computed, inject} from "vue";
 const {openModal, isModalVisible } = useModal()
+
+const isSideNavVisible = inject('isSideNavVisible')
+
+const isVisible = computed(() => isSideNavVisible.value ? 'side-nav-onclick' : 'side-nav-change')
+const isVisibleBackground = computed(() => isSideNavVisible.value ? 'side-nav-background' : '')
+
+const close = () => {
+  isSideNavVisible.value = false
+}
+
 </script>
 
 <style scoped>
@@ -46,22 +57,6 @@ const {openModal, isModalVisible } = useModal()
   z-index: 5;
   position: fixed;
   background-color: white;
-}
-
-@media (max-width: 992px){
-  .side-nav-change{
-    display: none;
-  }
-}
-.side-nav-onclick{
-  display: block;
-  margin-top: -95px;
-}
-@media (min-width: 993px){
-  .side-nav-change{
-    display: block;
-    margin-top: 0;
-  }
 }
 .logo{
   width: 100%;
@@ -87,16 +82,7 @@ const {openModal, isModalVisible } = useModal()
 .side-nav-close {
   display: none;
 }
-@media (max-width: 992px) {
-  .side-nav-close {
-    display: block;
-    float: right;
-    cursor: pointer;
-    top: 0;
-  }
-}
 .side-nav-background{
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -105,5 +91,29 @@ const {openModal, isModalVisible } = useModal()
   background-color: rgba(0,0,0,0.5);
   z-index: 2;
   cursor: pointer;
+}
+@media (max-width: 992px){
+  .side-nav-close {
+    display: block;
+    float: right;
+    cursor: pointer;
+    top: 0;
+  }
+  .side-nav-change{
+    display: none;
+  }
+  .side-nav-onclick{
+    display: block;
+    margin-top: -107px;
+  }
+}
+@media (min-width: 993px){
+  .side-nav-change{
+    display: block;
+    margin-top: 0px;
+  }
+  .side-nav-background{
+    display: none;
+  }
 }
 </style>

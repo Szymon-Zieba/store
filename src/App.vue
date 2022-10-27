@@ -3,7 +3,10 @@ import MainNav from '@/components/Nav/MainNav'
 import SideNav from '@/components/Nav/SideNav'
 import SubscribeNewsletter from '@/components/SubscribeNewsletter'
 import ContactInfo from '@/components/ContactInfo'
-import NewsletterPopup from '@/components/Popups/NewsletterPopup'
+import {provide, ref} from "vue";
+
+const isSideNavVisible = ref(false)
+provide('isSideNavVisible', isSideNavVisible)
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <section id="cart" class="cart">
-    <h1 class="cart-title">Your cart</h1>
+  <section id="cart" class="cart"  >
+    <h1 class="cart-title" v-if="isCartEmpty">Your cart</h1>
+    <div class="cart-title-empty" v-if="!isCartEmpty"><h1 class="cart-title" >Your cart is empty</h1></div>
     <p class="counter">
       {{ cartList.length }}  items
     </p>
@@ -8,7 +9,7 @@
         class="cart-item"
         v-for="(item, index) in cartList"
         :key="item.product.id"
-
+        v-if="isCartEmpty"
     >
       <div class="cart-item-center">
         <div class="cart-img-button">
@@ -17,7 +18,9 @@
             <i class="fa fa-trash"></i>
           </button>
         </div>
-        <img class="cart-img pd0-10" :src="item.product.image" alt="product-image">
+        <router-link :to="{ name: 'product', params: { id: item.product.id}}">
+          <img class="cart-img pd0-10" :src="item.product.image" alt="product-image">
+        </router-link>
       </div>
       <div class="cart-item-center cart-item-center1">
         <div class="pd0-10 cart-item-title mt-30-small">
@@ -30,7 +33,7 @@
             <button class="button cart-counter-button" @click="minusCounter(index)">
               -
             </button>
-            <p class="cart-counter-text">{{item.quantity}}</p>
+            <input class="cart-counter-input" type='tel' name="quantity" @change="checkInput(item.quantity)" v-model="item.quantity">
             <button class="button cart-counter-button" @click="plusCounter(index)">
               +
             </button>
@@ -43,13 +46,18 @@
         </div>
       </div>
     </div>
-    <div class="cart-checkout">
+    <div class="cart-checkout" v-if="isCartEmpty">
         <div class="cart-checkout-price">
           <span>Wartość produktów  <b>${{ cartValue }}</b></span>
       </div>
       <div class="cart-checkout-buttons">
-        <button class="button button-red cart-checkout-button button-large">Dostawa i płatność</button>
-        <router-link class="button button-black button-large" to="/">Kontynuuj zakupy</router-link>
+        <router-link class="button button-black button-large" to="/">Continue Shopping</router-link>
+        <router-link
+            class="button button-red cart-checkout-button button-large"
+            to="/summary"
+        >
+          Summary
+        </router-link>
       </div>
     </div>
   </section>
@@ -58,6 +66,7 @@
 <script setup>
 import {useCartStore} from "@/stores/cart";
 import {storeToRefs} from "pinia";
+import {computed} from "vue";
 
 const cartStore = useCartStore()
 const {cartList, cartValue} = storeToRefs(cartStore)
@@ -72,7 +81,13 @@ const plusCounter = (index) => {
     cartList.value[index].quantity += 1
   }
 }
+const cos = 2
+const isCartEmpty = computed(() => cartList.value.length !== 0)
 
+const checkInput = (input) => {
+  const reg = new RegExp('/d{2}');
+  console.log(reg.test(input));
+}
 </script>
 
 <style scoped>
@@ -83,6 +98,14 @@ const plusCounter = (index) => {
 .cart-title{
   padding: 30px;
   text-align: center;
+}
+.cart-title-empty{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  color: red;
+  transition: color 1s;
 }
 .cart-item{
   display: flex;
@@ -122,11 +145,9 @@ const plusCounter = (index) => {
 .cart-counter{
   display: flex;
 }
-.cart-counter-text{
-  width: 30px;
-  display: flex;
-  justify-content: center;
-
+.cart-counter-input{
+  max-width: 50px;
+  text-align: center;
 }
 .cart-item-small{
   display: flex;
@@ -145,7 +166,7 @@ const plusCounter = (index) => {
   padding: 0 10px;
 }
 .cart-checkout{
-  z-index: 2;
+  z-index: 1;
   position: sticky;
   height: 100px;
   bottom: 0;

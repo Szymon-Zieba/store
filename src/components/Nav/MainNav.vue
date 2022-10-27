@@ -1,12 +1,18 @@
 <template>
   <div class="main-nav">
-    <a href="/"><h3 class="main-nav-logo">LOGO</h3></a>
-    <p @click="openSideNav()" class="main-nav-logo-menu"><i class="fa-solid fa-bars"></i></p>
+    <router-link to="/"><h3 class="main-nav-logo">LOGO</h3></router-link>
+    <p @click="close" class="main-nav-logo-menu"><i class="fa-solid fa-bars"></i></p>
   </div>
 </template>
 
 <script setup>
-import {openSideNav} from "@/composables/displayIdStyle.js"
+
+import {inject} from "vue";
+
+const isSideNavVisible = inject('isSideNavVisible')
+const close = () =>  {
+  isSideNavVisible.value = !isSideNavVisible.value
+}
 </script>
 
 <style scoped>

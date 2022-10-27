@@ -6,7 +6,7 @@
     <div class="list">
       <div class="item"
            v-for="(item, index) in products"
-           :key="index"
+           :key="item.id"
       >
         <div class="item-photo">
           <div class="item-button">
@@ -15,7 +15,7 @@
               <i class="fa fa-shopping-cart"></i>
             </button>
           </div>
-          <router-link @click="scrollToTop" :to="{ name: 'product', params: { id: item.id}}"> <img class="item-img" :src="item.image" :alt="'item' + index" @click=""></router-link>
+          <router-link @click="scrollToTop" :to="{ name: 'product', params: { id: item.id}}"> <img class="item-img" :src="item.image" :alt="'item' + index"></router-link>
         </div>
         <p>
           {{item.product_name}}
@@ -55,7 +55,6 @@ import useModal from "@/composables/modal";
   const scrollToTop = () => {
     window.scrollTo(0,0);
   }
-
   onMounted(async() => {
      await getProducts()
   })

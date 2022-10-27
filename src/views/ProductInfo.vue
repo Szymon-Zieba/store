@@ -1,4 +1,10 @@
 <template>
+  <div class="page-not-found" v-if="!product">
+    <h1>ERROR 404</h1>
+    <h2>PRODUCT NOT FOUND</h2>
+
+    <h3>Go <router-link to="/" class="page-not-found-back"><b>back</b></router-link> to our shop</h3>
+  </div>
   <section class="product" v-if="product">
     <TopNav></TopNav>
     <div class="product-small">
@@ -29,7 +35,7 @@
   import Modal from "@/components/Modal"
   import AddToCartPopup from "@/components/Popups/AddToCartPopup"
   import TopNav from "@/components/Nav/TopNav"
-  import {computed, onMounted, ref} from "vue";
+  import {onMounted, ref} from "vue";
   import {useRoute} from "vue-router";
   import {useProductsStore} from "@/stores/products"
   import useModal from "@/composables/modal";
