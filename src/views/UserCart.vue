@@ -29,17 +29,9 @@
           </router-link>
         </div>
         <div class="cart-item-small mt-30-small">
-          <div class="cart-counter pd0-10">
-            <button class="button cart-counter-button" @click="minusCounter(index)">
-              -
-            </button>
-            <input class="cart-counter-input" type='tel' name="quantity" @change="checkInput(item.quantity)" v-model="item.quantity">
-            <button class="button cart-counter-button" @click="plusCounter(index)">
-              +
-            </button>
-          </div>
+          <InputButtons type='number' name="quantity" v-model="item.quantity"></InputButtons>
           <div class="cart-counter-price">
-            <span  >
+            <span>
             ${{(item.product.price.split('$')[1] * item.quantity).toFixed(2)}}
             </span>
           </div>
@@ -66,28 +58,13 @@
 <script setup>
 import {useCartStore} from "@/stores/cart";
 import {storeToRefs} from "pinia";
-import {computed} from "vue";
+import {computed, ref, watch} from "vue";
+import InputButtons from "@/components/Inputs/InputButtons";
 
 const cartStore = useCartStore()
 const {cartList, cartValue} = storeToRefs(cartStore)
 const {removeProduct} = cartStore
-const minusCounter = (index) => {
-  if(cartList.value[index].quantity){
-    cartList.value[index].quantity -= 1
-  }
-}
-const plusCounter = (index) => {
-  if(cartList.value[index].quantity < 10){
-    cartList.value[index].quantity += 1
-  }
-}
-const cos = 2
 const isCartEmpty = computed(() => cartList.value.length !== 0)
-
-const checkInput = (input) => {
-  const reg = new RegExp('/d{2}');
-  console.log(reg.test(input));
-}
 </script>
 
 <style scoped>
@@ -141,13 +118,6 @@ const checkInput = (input) => {
 .cart-img-button{
   display: none;
   position: absolute;
-}
-.cart-counter{
-  display: flex;
-}
-.cart-counter-input{
-  max-width: 50px;
-  text-align: center;
 }
 .cart-item-small{
   display: flex;

@@ -2,54 +2,87 @@
   <section class="fillData">
     <h1>Complete Data</h1>
     <h3>Please fill data before you go to the next step</h3>
-    <div class="fillData-list">
-      <div class="fillData-box">
-        <h4>Personal Data</h4>
-        <label for="name">Name</label>
-        <input required name="name">
-        <label  for="lastName">Last Name</label>
-        <input required name="lastName">
-        <label for="tel">Phone Number</label>
-        <input required name="tel">
-        <label for="email">Email</label>
-        <input required name="email">
-      </div>
-      <div class="fillData-box">
-        <h4>Address Data</h4>
-        <label for="city">City</label>
-        <input required name="city">
-        <label for="postCode">Post Code</label>
-        <input required name="postCode">
-        <label for="address">Address</label>
-        <input required name="address">
-        <label class="switch">
-          <input type="checkbox" v-model="checkIfBusiness">
-          <span class="slider round"></span>
-        </label>
-        <div v-if="checkIfBusiness" class="fillData-city-data-business">
-          <label for="business">Business Name</label>
-          <input required name="business">
-          <label for="nip">NIP</label>
-          <input required name="nip">
+    <form @submit.prevent="submit">
+      <div class="fillData-list">
+        <div class="fillData-box">
+          <h4>Personal Data</h4>
+          <label for="name">Name</label>
+          <InputValid :placeholder="'Use only letters'" :errorMessage="error.name" :validator="validatorName" v-model="personalData.name"></InputValid>
+          <label  for="lastName">Last Name</label>
+          <InputValid :placeholder="'Use only letters'" :errorMessage="error.lastName" :validator="validatorName" v-model="personalData.lastName"></InputValid>
+          <label for="tel">Phone Number</label>
+          <InputValid :placeholder="'000000000'" :errorMessage="error.phoneNumber" :validator="validatorPhone" v-model="personalData.phoneNumber"></InputValid>
+          <label for="email">Email</label>
+          <InputValid :placeholder="'email@email.com'" :errorMessage="error.email" :validator="validatorEmail" v-model="personalData.email"></InputValid>
+        </div>
+        <div class="fillData-box">
+          <h4>Address Data</h4>
+          <label for="city">City</label>
+          <InputValid :placeholder="'Use only letters'" :errorMessage="error.city" :validator="validatorName" v-model="personalData.city"></InputValid>
+          <label for="postCode">Post Code</label>
+          <InputValid :placeholder="'00-000'" :errorMessage="error.postCode" :validator="validatorPostCode" v-model="personalData.postCode"></InputValid>
+          <label for="address">Address</label>
+          <InputValid :placeholder="'Do not use special symbols'" :errorMessage="error.address" :validator="validatorAddress" v-model="personalData.address"></InputValid>
+          <div class="fillData-box-slider">
+            <label>Private</label>
+            <label class="switch">
+              <input type="checkbox" v-model="checkIfBusiness">
+              <span class="slider round"></span>
+            </label>
+            <label>Business</label>
+          </div>
+          <div v-if="checkIfBusiness" class="fillData-city-data-business">
+            <label for="business">Business Name</label>
+            <InputValid :placeholder="'Use only letters'" :errorMessage="error.businessName" :validator="validatorName" v-model="personalData.businessName"></InputValid>
+            <label for="nip">NIP</label>
+            <InputValid :placeholder="'0000000000'" :errorMessage="error.nip" :validator="validatorNIP" v-model="personalData.nip"></InputValid>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="checkout">
-      <div class="checkout-buttons">
-        <router-link to="/payment" class="button button-red button-large m0-15">
-          Delivery and Payment
-        </router-link>
-      </div>
-    </div>
+    </form>
   </section>
 </template>
 
 <script setup>
-import {ref} from "vue";
-
+import InputValid from "@/components/Inputs/InputValid"
+import {reactive, ref, watch} from "vue";
+import {validatorName, validatorEmail, validatorPhone, validatorPostCode, validatorAddress, validatorNIP} from "@/composables/validators"
 const checkIfBusiness= ref(false)
-</script>
 
+const personalData = reactive({
+  name: {value:'', valid:true},
+  lastName: {value:'', valid:true},
+  phoneNumber: {value:'', valid:true},
+  email: {value:'', valid:true},
+  city: {value:'', valid:true},
+  postCode: {value:'', valid:true},
+  address: {value:'', valid:true},
+  businessName: {value:null, valid:true},
+  nip: {value:null, valid:true},
+})
+
+const props = defineProps({
+  modelValue: Object,
+})
+const emit = defineEmits(['update:modelValue'])
+
+watch(personalData, () => {
+  emit('update:modelValue', personalData)
+})
+
+
+const error = {
+  name: "Please use only letters",
+  lastName: "Please use only letters",
+  phoneNumber: "Please write exactly 9 numbers",
+  email: "Please use format example@email.com",
+  city: "Please use only letters",
+  postCode: "Please use format 00-000",
+  address: "Please use only letters",
+  businessName: "Please use only letters",
+  nip: "Please write exactly 10 numbers",
+}
+</script>
 <style scoped>
 h1{
   display: flex;
@@ -62,6 +95,7 @@ h3{
 }
 .fillData{
   text-align: center;
+  margin-bottom: 50px;
 }
 .fillData-list{
   display: flex;
@@ -73,6 +107,11 @@ h3{
   width: 50%;
   padding: 35px;
 }
+.fillData-box-slider{
+  padding: 35px 0;
+  display: flex;
+  align-items: center;
+}
 .fillData-city-data-business{
   display: flex;
   flex-direction: column;
@@ -80,8 +119,9 @@ h3{
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 35px;
+  height: 20px;
+  margin: 0 30px;
 }
 .switch input {
   opacity: 0;
@@ -102,8 +142,8 @@ h3{
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 11px;
+  width: 15px;
   left: 4px;
   bottom: 4px;
   background-color: white;
@@ -118,9 +158,9 @@ input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(11px);
+  -ms-transform: translateX(11px);
+  transform: translateX(11px);
 }
 .slider.round {
   border-radius: 34px;

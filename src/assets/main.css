@@ -54,6 +54,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+input:focus {
+  background-color: #f1f0f0;
+  outline: none;
+}
 label{
   padding: 10px 5px;
 }
@@ -65,7 +69,8 @@ label{
   display: block;
 }
 .button:disabled{
-  cursor: context-menu;
+  pointer-events: none;
+  opacity: 0.3;
 }
 .button:hover{
   color: black;

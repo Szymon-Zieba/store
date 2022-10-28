@@ -27,20 +27,8 @@
       <td>Products Price</td>
       <td>${{cartValue}}</td>
     </tr>
-    <!-- and so on... -->
     </tbody>
   </table>
-
-  <div class="checkout">
-    <div class="checkout-buttons">
-      <router-link to="/cart" class="button button-black button-large m0-15">
-        Back to Cart
-      </router-link>
-      <router-link to="/fillData" class="button button-red button-large m0-15">
-        Delivery and Payment
-      </router-link>
-    </div>
-  </div>
 </div>
 </template>
 
@@ -89,15 +77,5 @@ const {summaryCartList, cartValue, summaryLength} = storeToRefs(cartStore)
   color: white;
   background-color: black;
   width: 50%;
-}
-.checkout-buttons{
-  padding: 30px;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  height: 200px;
-}
-.m0-15{
-  margin: 0 15px;
 }
 </style>

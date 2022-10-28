@@ -41,7 +41,6 @@
   import useModal from "@/composables/modal";
   import {storeToRefs} from "pinia";
 
-
   const {openModal, isModalVisible }  = useModal()
   const productsStore = useProductsStore()
   const {product} = storeToRefs(productsStore)
@@ -52,7 +51,6 @@
   onMounted(async() => {
     await getProduct(id.value)
   })
-
 </script>
 
 <style scoped>
