@@ -2,24 +2,24 @@
 
   <div id="multi-step-form" >
     <form @submit.prevent="submit()">
-      <div v-if="currentStep === 0">
+      <div v-show="currentStep === 0">
         <SummaryCart ></SummaryCart>
       </div>
-      <div v-if="currentStep === 1" >
+      <div v-show="currentStep === 1" >
         <FillData v-model="personalData"></FillData>
       </div>
-      <div v-if="currentStep === 2">
+      <div v-show="currentStep === 2">
         <PaymentDelivery v-model="addressData"></PaymentDelivery>
       </div>
     <div class="checkout">
       <div class="checkout-buttons">
-        <button class="button button-black button-large m0-1" v-if="!isFirstStep" @click="previousStep()">
+        <button type="button" class="button button-black button-large m0-1" v-if="!isFirstStep" @click="previousStep()">
           Previous
         </button>
-        <button class="button button-red button-large m0-15" v-if="isFirstStep" @click="nextStep()">
+        <button type="button" class="button button-red button-large m0-15" v-if="isFirstStep" @click="nextStep()">
           Next
         </button>
-        <button class="button button-red button-large m0-15" v-if="!isFirstStep && !isLastStep" @click="nextStep()" :disabled="!checkValid">
+        <button type="button" class="button button-red button-large m0-15" v-if="!isFirstStep && !isLastStep" @click="nextStep()" :disabled="!checkValid">
           Next
         </button>
         <button type="submit" class="button button-red button-large m0-15" v-if="isLastStep" :disabled="!checkValidAddress">
@@ -53,13 +53,15 @@ const previousStep = () => {
 const isFirstStep = computed(() => currentStep.value === 0)
 const isLastStep = computed(() => currentStep.value  === totalSteps -1)
 
-const personalData = ref({name: {valid: false}})
+const personalData = ref({checkIfBusiness: {value: 'off', valid: false}})
 const addressData = ref({pickedPayment: {value: false}})
-const checkValid = computed(() => Object.values(personalData.value).every(el => el.valid && el.value !== '') )
+const checkValid = computed(() =>
+      Object.values(personalData.value).every(el => el.valid && el.value !== '')
+)
 const checkValidAddress = computed(() =>
     addressData.value.pickedPayment.value === 'card' ?
         Object.values(addressData.value).every(el => el.valid && el.value !== '') :
-        true
+          true
 )
 const cartStore = useCartStore()
 const {cartList} = storeToRefs(cartStore)

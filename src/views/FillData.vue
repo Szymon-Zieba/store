@@ -26,12 +26,12 @@
           <div class="fillData-box-slider">
             <label>Private</label>
             <label class="switch">
-              <input type="checkbox" v-model="checkIfBusiness">
+              <input type="checkbox" v-model="personalData.checkIfBusiness.value">
               <span class="slider round"></span>
             </label>
             <label>Business</label>
           </div>
-          <div v-if="checkIfBusiness" class="fillData-city-data-business">
+          <div v-if="personalData.checkIfBusiness.value" class="fillData-city-data-business">
             <label for="business">Business Name</label>
             <InputValid :placeholder="'Use only letters'" :errorMessage="error.businessName" :validator="validatorName" v-model="personalData.businessName"></InputValid>
             <label for="nip">NIP</label>
@@ -45,9 +45,8 @@
 
 <script setup>
 import InputValid from "@/components/Inputs/InputValid"
-import {reactive, ref, watch} from "vue";
+import {reactive, watch} from "vue";
 import {validatorName, validatorEmail, validatorPhone, validatorPostCode, validatorAddress, validatorNIP} from "@/composables/validators"
-const checkIfBusiness= ref(false)
 
 const personalData = reactive({
   name: {value:'', valid:true},
@@ -55,6 +54,7 @@ const personalData = reactive({
   phoneNumber: {value:'', valid:true},
   email: {value:'', valid:true},
   city: {value:'', valid:true},
+  checkIfBusiness : {value:false, valid:true},
   postCode: {value:'', valid:true},
   address: {value:'', valid:true},
   businessName: {value:null, valid:true},
