@@ -67,6 +67,7 @@ const cartStore = useCartStore()
 const {cartList} = storeToRefs(cartStore)
 let allData
 const submit = () => {
+  if(!checkValidAddress.value) return
   allData = {
     personalData: personalData.value,
     addressData: addressData.value,
